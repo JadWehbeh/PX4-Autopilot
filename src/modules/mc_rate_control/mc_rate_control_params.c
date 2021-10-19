@@ -37,7 +37,47 @@
  *
  * @author Lorenz Meier <lorenz@px4.io>
  * @author Anton Babushkin <anton@px4.io>
+ * @author Jad Wehbeh <jad.wehbeh@mail.mcgill.ca>
  */
+
+/**
+ * Mixer Roll Gain
+ *
+ * Mixer gain on roll setpoints.
+ *
+ * @min 0.01
+ * @max 0.5
+ * @decimal 3
+ * @increment 0.01
+ * @group Multicopter Rate Control
+ */
+PARAM_DEFINE_FLOAT(MIXER_ROLL_P, 0.20f);
+
+/**
+ * Mixer Pitch Gain
+ *
+ * Mixer gain on pitch setpoints.
+ *
+ * @min 0.01
+ * @max 0.5
+ * @decimal 3
+ * @increment 0.01
+ * @group Multicopter Rate Control
+ */
+PARAM_DEFINE_FLOAT(MIXER_PITCH_P, 0.20f);
+
+/**
+ * Mixer Yaw Gain
+ *
+ * Mixer gain on yaw setpoints.
+ *
+ * @min 0.01
+ * @max 0.5
+ * @decimal 3
+ * @increment 0.01
+ * @group Multicopter Rate Control
+ */
+PARAM_DEFINE_FLOAT(MIXER_YAW_P, 0.20f);
 
 /**
  * Roll rate P gain

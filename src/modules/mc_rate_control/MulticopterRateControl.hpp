@@ -121,12 +121,19 @@ private:
 	matrix::Vector3f _rates_sp;			/**< angular rates setpoint */
 
 	float		_thrust_sp{0.0f};		/**< thrust setpoint */
+  	float   	_motor_1_sp{0.0f};  		/**< thrust setpoint for motor 1*/
+  	float   	_motor_2_sp{0.0f};  		/**< thrust setpoint for motor 2*/
+  	float   	_motor_3_sp{0.0f};  		/**< thrust setpoint for motor 3*/
+  	float   	_motor_4_sp{0.0f};  		/**< thrust setpoint for motor 4*/
 
 	hrt_abstime _last_run{0};
 
 	int8_t _landing_gear{landing_gear_s::GEAR_DOWN};
 
 	DEFINE_PARAMETERS(
+		(ParamFloat<px4::params::MIXER_ROLL_P>) _param_mixer_roll_weight,
+		(ParamFloat<px4::params::MIXER_PITCH_P>) _param_mixer_pitch_weight,
+		(ParamFloat<px4::params::MIXER_YAW_P>) _param_mixer_yaw_weight,
 		(ParamFloat<px4::params::MC_ROLLRATE_P>) _param_mc_rollrate_p,
 		(ParamFloat<px4::params::MC_ROLLRATE_I>) _param_mc_rollrate_i,
 		(ParamFloat<px4::params::MC_RR_INT_LIM>) _param_mc_rr_int_lim,

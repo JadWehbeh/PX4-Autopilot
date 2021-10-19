@@ -227,12 +227,16 @@ MulticopterRateControl::Run()
 			rate_ctrl_status.timestamp = hrt_absolute_time();
 			_controller_status_pub.publish(rate_ctrl_status);
 
+      			_motor_1_sp = _thrust_sp - _param_mixer_roll_weight.get()*att_control(0) + _param_mixer_pitch_weight.get()*att_control(1) + _param_mixer_yaw_weight.get()*att_control(2);
+      			_motor_2_sp = _thrust_sp + _param_mixer_roll_weight.get()*att_control(0) - _param_mixer_pitch_weight.get()*att_control(1) + _param_mixer_yaw_weight.get()*att_control(2);
+      			_motor_3_sp = _thrust_sp + _param_mixer_roll_weight.get()*att_control(0) + _param_mixer_pitch_weight.get()*att_control(1) - _param_mixer_yaw_weight.get()*att_control(2);
+      			_motor_4_sp = _thrust_sp - _param_mixer_roll_weight.get()*att_control(0) - _param_mixer_pitch_weight.get()*att_control(1) - _param_mixer_yaw_weight.get()*att_control(2);
+
 			// publish actuator controls
-			actuator_controls_s actuators{};
-			actuators.control[actuator_controls_s::INDEX_ROLL] = PX4_ISFINITE(att_control(0)) ? att_control(0) : 0.0f;
-			actuators.control[actuator_controls_s::INDEX_PITCH] = PX4_ISFINITE(att_control(1)) ? att_control(1) : 0.0f;
-			actuators.control[actuator_controls_s::INDEX_YAW] = PX4_ISFINITE(att_control(2)) ? att_control(2) : 0.0f;
-			actuators.control[actuator_controls_s::INDEX_THROTTLE] = PX4_ISFINITE(_thrust_sp) ? _thrust_sp : 0.0f;
+			actuators.control[actuator_controls_s::INDEX_ROLL] = PX4_ISFINITE(_motor_1_sp) ? _motor_1_sp : 0.0f;
+			actuators.control[actuator_controls_s::INDEX_PITCH] = PX4_ISFINITE(_motor_2_sp) ? _motor_2_sp : 0.0f;
+			actuators.control[actuator_controls_s::INDEX_YAW] = PX4_ISFINITE(_motor_3_sp) ? _motor_3_sp : 0.0f;
+			actuators.control[actuator_controls_s::INDEX_THROTTLE] = PX4_ISFINITE(_motor_4_sp) ? _motor_4_sp : 0.0f;
 			actuators.control[actuator_controls_s::INDEX_LANDING_GEAR] = _landing_gear;
 			actuators.timestamp_sample = angular_velocity.timestamp_sample;
 
