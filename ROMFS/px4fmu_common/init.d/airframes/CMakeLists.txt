@@ -86,6 +86,7 @@ px4_add_romfs_files(
 	4073_ifo-s
 	4080_zmr250
 	4090_nanomind
+  4099_quad_x_bidirectional
 	4100_tiltquadrotor
 	4250_teal
 	4500_clover4

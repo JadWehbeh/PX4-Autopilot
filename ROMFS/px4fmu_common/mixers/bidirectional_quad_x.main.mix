@@ -1,0 +1,23 @@
+Control Motor 1 with control_group_0.channel_0
+
+M: 1
+O:      10000  10000       0 -10000  10000
+S: 0 0  10000  10000       0 -10000  10000
+
+Control Motor 2 with control_group_0.channel_1
+
+M: 1
+O:      10000  10000      0 -10000  10000
+S: 0 1  10000  10000      0 -10000  10000
+
+Control Motor 3 with control_group_0.channel_2
+
+M: 1
+O:      10000  10000      0 -10000  10000
+S: 0 2  10000  10000      0 -10000  10000
+
+Control Motor 4 with control_group_0.channel_3
+
+M: 1
+O:      10000  10000      0 -10000  10000
+S: 0 3  10000  10000      0 -10000  10000
