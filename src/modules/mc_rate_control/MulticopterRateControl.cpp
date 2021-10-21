@@ -233,6 +233,7 @@ MulticopterRateControl::Run()
       			_motor_4_sp = _thrust_sp - _param_mixer_roll_weight.get()*att_control(0) - _param_mixer_pitch_weight.get()*att_control(1) - _param_mixer_yaw_weight.get()*att_control(2);
 
 			// publish actuator controls
+      actuator_controls_s actuators{};
 			actuators.control[actuator_controls_s::INDEX_ROLL] = PX4_ISFINITE(_motor_1_sp) ? _motor_1_sp : 0.0f;
 			actuators.control[actuator_controls_s::INDEX_PITCH] = PX4_ISFINITE(_motor_2_sp) ? _motor_2_sp : 0.0f;
 			actuators.control[actuator_controls_s::INDEX_YAW] = PX4_ISFINITE(_motor_3_sp) ? _motor_3_sp : 0.0f;
