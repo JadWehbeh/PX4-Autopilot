@@ -99,6 +99,7 @@ set(msg_files
 	multirotor_motor_limits.msg
 	navigator_mission_item.msg
 	obstacle_distance.msg
+  offboard_actuator_controls.msg
 	offboard_control_mode.msg
 	onboard_computer_status.msg
 	optical_flow.msg
