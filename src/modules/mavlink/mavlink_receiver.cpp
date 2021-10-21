@@ -257,6 +257,10 @@ MavlinkReceiver::handle_message(mavlink_message_t *msg)
 		handle_message_statustext(msg);
 		break;
 
+  case MAVLINK_MSG_ID_OFFBOARD_ACTUATORS_COMMAND:
+    handle_message_offboard_actuator_controls(msg);
+    break;
+
 #if !defined(CONSTRAINED_FLASH)
 
 	case MAVLINK_MSG_ID_NAMED_VALUE_FLOAT:
@@ -1174,6 +1178,25 @@ MavlinkReceiver::handle_message_set_actuator_control_target(mavlink_message_t *m
 			}
 		}
 	}
+}
+
+void
+MavlinkReceiver::handle_message_offboard_actuator_controls(mavlink_message_t *msg)
+{
+	mavlink_offboard_actuators_command_t offboard_acts;
+	mavlink_msg_offboard_actuators_command_decode(msg, &offboard_acts);
+
+	struct offboard_actuator_controls_s f;
+  memset(&f, 0, sizeof(f));
+
+  f.timestamp = hrt_absolute_time();
+  f.timestamp_sample = offboard_acts.time_usec;
+
+  for(int i = 0; i < 8; i++) {
+    f.control[i] = offboard_acts.controls[i];
+  }
+
+  _offboard_actuator_controls_pub.publish(f);
 }
 
 void

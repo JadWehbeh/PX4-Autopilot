@@ -79,6 +79,7 @@
 #include <uORB/topics/log_message.h>
 #include <uORB/topics/manual_control_setpoint.h>
 #include <uORB/topics/obstacle_distance.h>
+#include <uORB/topics/offboard_actuator_controls.h>
 #include <uORB/topics/offboard_control_mode.h>
 #include <uORB/topics/onboard_computer_status.h>
 #include <uORB/topics/optical_flow.h>
@@ -110,6 +111,8 @@
 # include <uORB/topics/debug_value.h>
 # include <uORB/topics/debug_vect.h>
 #endif // !CONSTRAINED_FLASH
+
+#include "v2.0/custom_messages/mavlink_msg_offboard_actuators_command.h"
 
 using namespace time_literals;
 
@@ -189,6 +192,7 @@ private:
 	void handle_message_gimbal_manager_set_attitude(mavlink_message_t *msg);
 	void handle_message_gimbal_manager_set_manual_control(mavlink_message_t *msg);
 	void handle_message_gimbal_device_information(mavlink_message_t *msg);
+  void handle_message_offboard_actuator_controls(mavlink_message_t *msg);
 
 #if !defined(CONSTRAINED_FLASH)
 	void handle_message_debug(mavlink_message_t *msg);
@@ -292,6 +296,7 @@ private:
 	uORB::Publication<vehicle_rates_setpoint_s>		_rates_sp_pub{ORB_ID(vehicle_rates_setpoint)};
 	uORB::Publication<vehicle_trajectory_bezier_s>		_trajectory_bezier_pub{ORB_ID(vehicle_trajectory_bezier)};
 	uORB::Publication<vehicle_trajectory_waypoint_s>	_trajectory_waypoint_pub{ORB_ID(vehicle_trajectory_waypoint)};
+  uORB::Publication<offboard_actuator_controls_s>  _offboard_actuator_controls_pub{ORB_ID(offboard_actuator_controls)};
 
 #if !defined(CONSTRAINED_FLASH)
 	uORB::Publication<debug_array_s>			_debug_array_pub {ORB_ID(debug_array)};
