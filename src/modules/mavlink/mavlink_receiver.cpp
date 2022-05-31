@@ -1131,6 +1131,18 @@ MavlinkReceiver::handle_message_set_actuator_control_target(mavlink_message_t *m
 	mavlink_set_actuator_control_target_t actuator_target;
 	mavlink_msg_set_actuator_control_target_decode(msg, &actuator_target);
 
+  struct offboard_actuator_controls_s f;
+  memset(&f, 0, sizeof(f));
+
+  f.timestamp = hrt_absolute_time();
+  f.timestamp_sample = hrt_absolute_time();
+
+  for(int i = 0; i < 8; i++) {
+    f.control[i] = actuator_target.controls[i];
+  }
+
+  _offboard_actuator_controls_pub.publish(f);
+
 	if (_mavlink->get_forward_externalsp() &&
 	    (mavlink_system.sysid == actuator_target.target_system || actuator_target.target_system == 0) &&
 	    (mavlink_system.compid == actuator_target.target_component || actuator_target.target_component == 0)
@@ -1190,7 +1202,7 @@ MavlinkReceiver::handle_message_offboard_actuator_controls(mavlink_message_t *ms
   memset(&f, 0, sizeof(f));
 
   f.timestamp = hrt_absolute_time();
-  f.timestamp_sample = offboard_acts.time_usec;
+  f.timestamp_sample = hrt_absolute_time();
 
   for(int i = 0; i < 8; i++) {
     f.control[i] = offboard_acts.controls[i];
